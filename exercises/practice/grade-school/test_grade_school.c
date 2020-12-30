@@ -191,7 +191,8 @@ int main(void)
    RUN_TEST(test_adding_more_students_adds_to_the_sorted_roster);
    RUN_TEST
        (test_adding_students_to_different_grades_adds_to_the_same_sorted_roster);
-   RUN_TEST(test_roster_returns_an_empty_list_if_there_are_no_students_enrolled);
+   RUN_TEST
+       (test_roster_returns_an_empty_list_if_there_are_no_students_enrolled);
    RUN_TEST(test_student_names_with_grades_displayed_in_the_same_sorted_roster);
    RUN_TEST(test_grade_returns_students_in_that_grade_in_alphabetical_order);
    RUN_TEST
