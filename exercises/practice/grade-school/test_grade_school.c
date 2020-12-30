@@ -54,10 +54,11 @@ static void test_adding_student_adds_to_the_sorted_roster(void)
 
 static void test_a_student_cant_be_in_two_different_grades(void)
 {
+   TEST_IGNORE();               // delete this line to run test
    roster_t input = {
       2, {
-          (student_t) {2, "Aimee"},
-          (student_t) {1, "Aimee"}}
+          (student_t) {1, "Aimee"},
+          (student_t) {2, "Aimee"}}
    };
    uint8_t desired_grade = 5;
 
@@ -70,7 +71,7 @@ static void test_a_student_cant_be_in_two_different_grades(void)
 
 static void test_adding_more_students_adds_to_the_sorted_roster(void)
 {
-   TEST_IGNORE();               // delete this line to run test
+   TEST_IGNORE();
    roster_t input = {
       3, {
           (student_t) {2, "Blair"},
@@ -108,7 +109,7 @@ test_adding_students_to_different_grades_adds_to_the_same_sorted_roster(void)
 }
 
 static void
-test_grade_returns_an_empty_list_if_there_are_no_students_enrolled(void)
+test_roster_returns_an_empty_list_if_there_are_no_students_enrolled(void)
 {
    TEST_IGNORE();
    roster_t actual = get_roster();
@@ -190,7 +191,7 @@ int main(void)
    RUN_TEST(test_adding_more_students_adds_to_the_sorted_roster);
    RUN_TEST
        (test_adding_students_to_different_grades_adds_to_the_same_sorted_roster);
-   RUN_TEST(test_grade_returns_an_empty_list_if_there_are_no_students_enrolled);
+   RUN_TEST(test_roster_returns_an_empty_list_if_there_are_no_students_enrolled);
    RUN_TEST(test_student_names_with_grades_displayed_in_the_same_sorted_roster);
    RUN_TEST(test_grade_returns_students_in_that_grade_in_alphabetical_order);
    RUN_TEST
