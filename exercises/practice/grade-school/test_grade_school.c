@@ -60,7 +60,7 @@ static void test_a_student_cant_be_in_two_different_grades(void)
           (student_t) {1, "Aimee"},
           (student_t) {2, "Aimee"}}
    };
-   uint8_t desired_grade = 5;
+   uint8_t desired_grade = 2;
 
    populate_roster(&input);
 
