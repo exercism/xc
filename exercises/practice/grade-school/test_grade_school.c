@@ -37,17 +37,8 @@ static void check_roster(roster_t * input, roster_t * expected)
    check_roster_names(expected, &actual);
 }
 
-static void
-test_grade_returns_an_empty_list_if_there_are_no_students_enrolled(void)
+static void test_adding_student_adds_to_the_sorted_roster(void)
 {
-   roster_t roster = get_roster();
-
-   TEST_ASSERT_EQUAL(0, roster.count);
-}
-
-static void test_adding_student_adds_to_roster(void)
-{
-   TEST_IGNORE();               // delete this line to run test
    roster_t input = {
       .count = 1,
       .students = {
@@ -61,7 +52,24 @@ static void test_adding_student_adds_to_roster(void)
    check_roster(&input, &expected);
 }
 
-static void test_adding_more_students_adds_to_roster(void)
+static void test_a_student_cant_be_in_two_different_grades(void)
+{
+   TEST_IGNORE();               // delete this line to run test
+   roster_t input = {
+      2, {
+          (student_t) {1, "Aimee"},
+          (student_t) {2, "Aimee"}}
+   };
+   uint8_t desired_grade = 2;
+
+   populate_roster(&input);
+
+   roster_t actual = get_grade(desired_grade);
+
+   TEST_ASSERT_EQUAL(0, actual.count);
+}
+
+static void test_adding_more_students_adds_to_the_sorted_roster(void)
 {
    TEST_IGNORE();
    roster_t input = {
@@ -81,7 +89,8 @@ static void test_adding_more_students_adds_to_roster(void)
    check_roster(&input, &expected);
 }
 
-static void test_adding_students_to_different_grades_adds_to_same_roster(void)
+static void
+test_adding_students_to_different_grades_adds_to_the_same_sorted_roster(void)
 {
    TEST_IGNORE();
    roster_t input = {
@@ -99,27 +108,17 @@ static void test_adding_students_to_different_grades_adds_to_same_roster(void)
    check_roster(&input, &expected);
 }
 
-static void test_students_in_same_grade_are_sorted_in_same_roster(void)
+static void
+test_roster_returns_an_empty_list_if_there_are_no_students_enrolled(void)
 {
    TEST_IGNORE();
-   roster_t input = {
-      3, {
-          (student_t) {1, "Peter"},
-          (student_t) {1, "Anna"},
-          (student_t) {1, "Barb"}}
-   };
+   roster_t actual = get_roster();
 
-   roster_t expected = {
-      3, {
-          (student_t) {1, "Anna"},
-          (student_t) {1, "Barb"},
-          (student_t) {1, "Peter"}}
-   };
-
-   check_roster(&input, &expected);
+   TEST_ASSERT_EQUAL(0, actual.count);
 }
 
-static void test_students_with_grades_listed_in_same_sorted_roster(void)
+static void
+test_student_names_with_grades_displayed_in_the_same_sorted_roster(void)
 {
    TEST_IGNORE();
    roster_t input = {
@@ -147,7 +146,8 @@ static void test_students_with_grades_listed_in_same_sorted_roster(void)
    check_roster(&input, &expected);
 }
 
-static void test_grade_lists_students_in_that_grade_in_alphabetical_order(void)
+static void
+test_grade_returns_students_in_that_grade_in_alphabetical_order(void)
 {
    TEST_IGNORE();
    roster_t input = {
@@ -171,17 +171,32 @@ static void test_grade_lists_students_in_that_grade_in_alphabetical_order(void)
    check_roster_names(&expected, &actual);
 }
 
+static void
+test_grade_returns_an_empty_list_if_there_are_no_students_in_that_grade(void)
+{
+   TEST_IGNORE();
+
+   uint8_t desired_grade = 1;
+   roster_t actual = get_grade(desired_grade);
+
+   TEST_ASSERT_EQUAL(0, actual.count);
+}
+
 int main(void)
 {
    UnityBegin("test_grade_school.c");
 
-   RUN_TEST(test_grade_returns_an_empty_list_if_there_are_no_students_enrolled);
-   RUN_TEST(test_adding_student_adds_to_roster);
-   RUN_TEST(test_adding_more_students_adds_to_roster);
-   RUN_TEST(test_adding_students_to_different_grades_adds_to_same_roster);
-   RUN_TEST(test_students_in_same_grade_are_sorted_in_same_roster);
-   RUN_TEST(test_students_with_grades_listed_in_same_sorted_roster);
-   RUN_TEST(test_grade_lists_students_in_that_grade_in_alphabetical_order);
+   RUN_TEST(test_adding_student_adds_to_the_sorted_roster);
+   RUN_TEST(test_a_student_cant_be_in_two_different_grades);
+   RUN_TEST(test_adding_more_students_adds_to_the_sorted_roster);
+   RUN_TEST
+       (test_adding_students_to_different_grades_adds_to_the_same_sorted_roster);
+   RUN_TEST
+       (test_roster_returns_an_empty_list_if_there_are_no_students_enrolled);
+   RUN_TEST(test_student_names_with_grades_displayed_in_the_same_sorted_roster);
+   RUN_TEST(test_grade_returns_students_in_that_grade_in_alphabetical_order);
+   RUN_TEST
+       (test_grade_returns_an_empty_list_if_there_are_no_students_in_that_grade);
 
    return UnityEnd();
 }
